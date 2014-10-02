@@ -4,9 +4,9 @@ class DailyController extends Controller
 {
 	public $layout = '//layouts/daily';
 
-	public function actionTestApi()
+	public function actionIndex()
 	{
-		$service = new ApiService();
-		$service->getLatestArticle();
+		$articles = Article::model()->findAll();
+		$this->render('index', array('articles' => $articles));
 	}
 }

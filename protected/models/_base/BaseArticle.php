@@ -16,12 +16,16 @@
  * @property string $body
  * @property string $share_url
  * @property string $image_source
+ * @property integer $section_id
+ * @property string $section_name
  * @property string $js_url
  * @property string $css_url
  * @property integer $type
+ * @property integer $created
+ * @property integer $deleted
  *
  */
-abstract class BaseArticle extends GxActiveRecord {
+abstract class BaseArticle extends CActiveRecord {
 
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -42,10 +46,10 @@ abstract class BaseArticle extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('news_id, title, body', 'required'),
-			array('news_id, type', 'numerical', 'integerOnly'=>true),
-			array('image_url, share_url, image_source, js_url, css_url', 'safe'),
-			array('image_url, share_url, image_source, js_url, css_url, type', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, news_id, title, image_url, body, share_url, image_source, js_url, css_url, type', 'safe', 'on'=>'search'),
+			array('news_id, section_id, type, created, deleted', 'numerical', 'integerOnly'=>true),
+			array('image_url, share_url, image_source, section_name, js_url, css_url', 'safe'),
+			array('image_url, share_url, image_source, section_id, section_name, js_url, css_url, type, created, deleted', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, news_id, title, image_url, body, share_url, image_source, section_id, section_name, js_url, css_url, type, created, deleted', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,9 +72,13 @@ abstract class BaseArticle extends GxActiveRecord {
 			'body' => Yii::t('app', 'Body'),
 			'share_url' => Yii::t('app', 'Share Url'),
 			'image_source' => Yii::t('app', 'Image Source'),
+			'section_id' => Yii::t('app', 'Section'),
+			'section_name' => Yii::t('app', 'Section Name'),
 			'js_url' => Yii::t('app', 'Js Url'),
 			'css_url' => Yii::t('app', 'Css Url'),
 			'type' => Yii::t('app', 'Type'),
+			'created' => Yii::t('app', 'Created'),
+			'deleted' => Yii::t('app', 'Deleted'),
 		);
 	}
 
@@ -84,9 +92,13 @@ abstract class BaseArticle extends GxActiveRecord {
 		$criteria->compare('body', $this->body, true);
 		$criteria->compare('share_url', $this->share_url, true);
 		$criteria->compare('image_source', $this->image_source, true);
+		$criteria->compare('section_id', $this->section_id);
+		$criteria->compare('section_name', $this->section_name, true);
 		$criteria->compare('js_url', $this->js_url, true);
 		$criteria->compare('css_url', $this->css_url, true);
 		$criteria->compare('type', $this->type);
+		$criteria->compare('created', $this->created);
+		$criteria->compare('deleted', $this->deleted);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

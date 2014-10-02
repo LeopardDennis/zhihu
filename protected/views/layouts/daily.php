@@ -14,7 +14,8 @@
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap.min.js', CClientScript::POS_HEAD);
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js', CClientScript::POS_HEAD);
         ?>
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        <title>知乎日报</title>
+        <meta name="viewport" content="width=device-width">
         <!--[if lt IE 9]>
           <script src="//oss.maxcdn.com/libs/html5shiv/3.6.2/html5shiv.js"></script>
           <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>

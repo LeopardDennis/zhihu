@@ -10,7 +10,7 @@ class ApiService
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		$output = curl_exec($curl);
 		if(curl_errno($curl))
@@ -18,12 +18,12 @@ class ApiService
 			echo 'Errno: '.curl_error($curl);
 		}
 		curl_close($curl);
-		return $output;
+		return json_decode($output, true);
 	}
 
 	public function downloadArticle($articleId)
 	{	
-		$this->generalCurl($articleId);
+		return $this->generalCurl($articleId);
 	}
 
 	public function batchDownload($articleIds = array())
@@ -31,21 +31,32 @@ class ApiService
 		if(!is_array($articleIds))
 			return false;
 
+		$articlesList = array();
 		foreach($articleIds as $articleId)
 		{
-			$this->downloadArticle($articleId);
+			$articlesList[] = $this->downloadArticle($articleId);
 		}
+		return $articlesList;
 	}
 
 	public function getLatestArticle()
 	{
 		$urlSuffix = 'latest';
-		$this->generalCurl($urlSuffix);
+		return $this->generalCurl($urlSuffix);
 	}
 
 	public function getHotArticle()
 	{
 		$urlSuffix = 'hot';
-		$this->generalCurl($urlSuffix);
+		return $this->generalCurl($urlSuffix);
+	}
+
+	public function getBeforeArticles($date = null)
+	{
+		if(!is_null($date) && strlen($date) != 8)
+			return false;
+
+		$urlSuffix = 'before/'.$date;
+		return $this->generalCurl($urlSuffix);
 	}
 }
