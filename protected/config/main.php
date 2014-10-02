@@ -17,6 +17,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.widgets.*',
+		'application.services.*',
 		'ext.*',
 		'ext.giix-components.*',
 	),
