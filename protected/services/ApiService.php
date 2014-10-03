@@ -39,13 +39,13 @@ class ApiService
 		return $articlesList;
 	}
 
-	public function getLatestArticle()
+	public function getLatestArticles()
 	{
 		$urlSuffix = 'latest';
 		return $this->generalCurl($urlSuffix);
 	}
 
-	public function getHotArticle()
+	public function getHotArticles()
 	{
 		$urlSuffix = 'hot';
 		return $this->generalCurl($urlSuffix);

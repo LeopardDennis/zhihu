@@ -2,8 +2,8 @@
 
 class ArticleCommand extends CConsoleCommand
 {
-	public function actionLatestArticle()
+	public function actionGetLatestArticles()
 	{
-		Article::model()->saveLatestArticle();
+		Article::model()->saveLatestArticles();
 	}
 }

@@ -8,26 +8,35 @@ class Article extends BaseArticle
 		return parent::model($className);
 	}
 
-	public function saveLatestArticle()
+	public function saveLatestArticles()
 	{
 		$service = new ApiService();
-		$latestArticleList = $service->getLatestArticle();
-		$date = strtotime($latestArticleList['date']);
-		$stories = $latestArticleList['stories'];
-		$topStories = $latestArticleList['top_stories'];
-		$newIds = array();
+		$latestArticleList = $service->getLatestArticles();
+		$date = isset($latestArticleList['date']) ? strtotime($latestArticleList['date']) : strtotime('today');
+		$stories = isset($latestArticleList['stories']) ? $latestArticleList['stories'] : array();
+		$topStories = isset($latestArticleList['top_stories']) ? $latestArticleList['top_stories'] : array();
+		$newsIds = array();
 
 		foreach($stories as $story)
 		{
 			$newsIds[] = $story['id'];
 		}
 
+		$this->saveArticles($newsIds, $date);
+	}
+
+	private function saveArticles($newsIds = array(), $date)
+	{
+		if(!is_array($newsIds))
+			return false;
+
+		$service = new ApiService();
 		$downloadedArticles = $service->batchDownload($newsIds);
 
 		foreach($downloadedArticles as $downloadedArticle)
 		{	
 			$newsId = isset($downloadedArticle['id']) ? $downloadedArticle['id'] : '';
-			$article = Article::model()->findByAttributes(array('news_id' => $newsId));
+			$article = $this->findByAttributes(array('news_id' => $newsId));
 			if(empty($article))
 				$article = new Article();
 			$article->news_id = $newsId;

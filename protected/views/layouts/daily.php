@@ -6,8 +6,6 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl;?>/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl;?>/css/fonts.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl;?>/css/animate.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl;?>/css/main.css<?php echo '?v='.Yii::app()->clientScript->cssVersion;?>">
         <?php
             Yii::app()->clientScript->registerCoreScript('jquery');

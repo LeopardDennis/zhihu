@@ -6,7 +6,7 @@ class DailyController extends Controller
 
 	public function actionIndex()
 	{
-		$articles = Article::model()->findAll();
+		$articles = Article::model()->findAll('deleted = 0');
 		$this->render('index', array('articles' => $articles));
 	}
 }
