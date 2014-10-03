@@ -32,10 +32,12 @@ class ApiService
 			return false;
 
 		$articlesList = array();
+
 		foreach($articleIds as $articleId)
 		{
 			$articlesList[] = $this->downloadArticle($articleId);
 		}
+
 		return $articlesList;
 	}
 
@@ -51,11 +53,8 @@ class ApiService
 		return $this->generalCurl($urlSuffix);
 	}
 
-	public function getBeforeArticles($date = null)
+	public function getBeforeArticles($date)
 	{
-		if(!is_null($date) && strlen($date) != 8)
-			return false;
-
 		$urlSuffix = 'before/'.$date;
 		return $this->generalCurl($urlSuffix);
 	}

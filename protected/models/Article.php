@@ -25,6 +25,38 @@ class Article extends BaseArticle
 		$this->saveArticles($newsIds, $date);
 	}
 
+	public function saveHotArticles()
+	{
+		$service = new ApiService();
+		$hotArticleList = $service->getHotArticles();
+		$recent = isset($hotArticleList['recent']) ? $hotArticleList['recent'] : array();
+		$newsIds = array();
+		$date = strtotime('today');
+
+		foreach($recent as $article)
+		{
+			$newsIds[] = $article['news_id'];
+		}
+
+		$this->saveArticles($newsIds, $date);
+	}
+
+	public function saveBeforeArticles($date)
+	{
+		$service = new ApiService();
+		$beforeArticleList = $service->getBeforeArticles($date);
+		$date = isset($beforeArticleList['date']) ? strtotime($beforeArticleList['date']) : strtotime('today');
+		$stories = isset($beforeArticleList['stories']) ? $beforeArticleList['stories'] : array();
+		$newsIds = array();
+		
+		foreach($stories as $story)
+		{
+			$newsIds[] = $story['id'];
+		}
+
+		$this->saveArticles($newsIds, $date);
+	}
+
 	private function saveArticles($newsIds = array(), $date)
 	{
 		if(!is_array($newsIds))
