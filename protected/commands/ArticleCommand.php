@@ -4,12 +4,12 @@ class ArticleCommand extends CConsoleCommand
 {
 	public function actionGetLatestArticles()
 	{
-		Article::model()->saveLatestArticles();
+		Articles::model()->saveLatestArticles();
 	}
 
 	public function actionGetHotArticles()
 	{
-		Article::model()->saveHotArticles();
+		Articles::model()->saveHotArticles();
 	}
 
 	public function actionGetBeforeArticles($date = null)
@@ -17,12 +17,12 @@ class ArticleCommand extends CConsoleCommand
 		if(!is_null($date) && strlen($date) != 8)
 			return false;
 		
-		Article::model()->saveBeforeArticles($date);
+		Articles::model()->saveBeforeArticles($date);
 	}
 
 	public function actionGetAllArticles()
 	{
-		for($i = 0; $i <= 5000000; $i++)
+		for($i = 1; $i <= 5000000; $i++)
 		{
 			$url = 'http://news-at.zhihu.com/api/3/news/'.$i;
 			$curl = curl_init();

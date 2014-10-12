@@ -227,3 +227,54 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.zh-header
+{
+	background: #009dd7;
+	height: 55px;
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+}
+
+.zh-logo
+{
+	height: 50px;
+	margin-left: 100px;
+}
+
+#zh-content
+{
+	margin-top: 75px;
+}
+
+.zh-item
+{
+	margin: 10px;
+	cursor: pointer;
+}
+
+.zh-item:hover img
+{
+	filter: brightness(60%);
+	-webkit-filter: brightness(60%);
+	-moz-filter: brightness(60%);
+}
+
+.zh-item-title
+{
+	font-family: "Microsoft YaHei";
+	color: white;
+	font-size: 20px;
+	width: 320px;
+	position: absolute;
+	top: 250px;
+	padding: 0 10px;
+}

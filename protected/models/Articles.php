@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._base.BaseArticle');
+Yii::import('application.models._base.BaseArticles');
 
-class Article extends BaseArticle
+class Articles extends BaseArticles
 {
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -70,7 +70,7 @@ class Article extends BaseArticle
 			$newsId = isset($downloadedArticle['id']) ? $downloadedArticle['id'] : '';
 			$article = $this->findByAttributes(array('news_id' => $newsId));
 			if(empty($article))
-				$article = new Article();
+				$article = new Articles();
 			$article->news_id = $newsId;
 			$article->title = $title = isset($downloadedArticle['title']) ? $downloadedArticle['title'] : '';
 			$article->image_url = $imageUrl = isset($downloadedArticle['image']) ? $downloadedArticle['image'] : '';
