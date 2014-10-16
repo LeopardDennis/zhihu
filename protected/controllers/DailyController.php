@@ -6,8 +6,7 @@ class DailyController extends Controller
 
 	public function actionIndex()
 	{
-		$articles = Articles::model()->findAll('deleted = 0');
-		$this->render('index', array('articles' => $articles));
+		$this->render('index');
 	}
 
 	public function actionGetArticles()
@@ -15,7 +14,7 @@ class DailyController extends Controller
 		$articlesList = array();
 		$articlesSum = Articles::model()->count('deleted = 0');
 		$articlesList['total'] = $articlesSum;
-		$articles = Articles::model()->findAll('deleted = 0');
+		$articles = Articles::model()->findAll('deleted = 0 ORDER BY news_id DESC');
 		foreach ($articles as $index => $article) {
 			$articlesList['result'][] = array(
 				'image' => $article->image_url,
