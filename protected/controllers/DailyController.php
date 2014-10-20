@@ -11,15 +11,23 @@ class DailyController extends Controller
 
 	public function actionGetArticles()
 	{
+		$page = Yii::app()->request->getQuery('page', 1);
 		$articlesList = array();
-		$articlesSum = Articles::model()->count('deleted = 0');
-		$articlesList['total'] = $articlesSum;
-		$articles = Articles::model()->findAll('deleted = 0 ORDER BY news_id DESC');
+		$articles = Yii::app()->db->createCommand()
+					->from('articles')
+					->where("deleted = 0")
+					->limit(30)
+					->offset(($page-1) * 30)
+					->order('news_id DESC')
+					->queryAll();
+
+		$articlesList['total'] = count($articles);
 		foreach ($articles as $index => $article) {
 			$articlesList['result'][] = array(
-				'image' => $article->image_url,
+				'image' => $article['image_url'],
 				'height' => 320,
-				'title' => $article->title,
+				'title' => $article['title'],
+				'shareUrl' => $article['share_url'],
 			);
 		}
 		echo json_encode($articlesList);
