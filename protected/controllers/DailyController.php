@@ -24,7 +24,7 @@ class DailyController extends Controller
 		$articlesList['total'] = count($articles);
 		foreach ($articles as $index => $article) {
 			$articlesList['result'][] = array(
-				'image' => $article['image_url'],
+				'image' => Yii::app()->baseUrl.$article['image_url'],
 				'height' => 320,
 				'title' => $article['title'],
 				'shareUrl' => $article['share_url'],

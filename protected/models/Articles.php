@@ -4,6 +4,8 @@ Yii::import('application.models._base.BaseArticles');
 
 class Articles extends BaseArticles
 {
+	private $defaultArticleImage = 'default.png';
+
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
@@ -73,7 +75,16 @@ class Articles extends BaseArticles
 				$article = new Articles();
 			$article->news_id = $newsId;
 			$article->title = $title = isset($downloadedArticle['title']) ? $downloadedArticle['title'] : '';
-			$article->image_url = $imageUrl = isset($downloadedArticle['image']) ? $downloadedArticle['image'] : '';
+			$imageUrl = isset($downloadedArticle['image']) ? $downloadedArticle['image'] : '';
+			if(!empty($imageUrl)){
+				$imgContents = file_get_contents($imageUrl);
+				$imgInfo = pathinfo($imageUrl);
+				$imgName = $imgInfo["basename"];
+				file_put_contents('../images/articles/'.$imgName, $imgContents);
+			}else{
+				$imgName = $this->defaultArticleImage;
+			}
+			$article->image_url = '/images/articles/'.$imgName;
 			$article->body = $body = isset($downloadedArticle['body']) ? $downloadedArticle['body'] : '';
 			$article->share_url = $shareUrl = isset($downloadedArticle['share_url']) ? $downloadedArticle['share_url'] : '';
 			$article->image_source = $imageSource = isset($downloadedArticle['image_source']) ? $downloadedArticle['image_source'] : '';
