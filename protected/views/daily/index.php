@@ -14,6 +14,8 @@
 	</script>
 </div>
 
+<div id="top"></div>
+
 <script>
 	$('#zh-content').waterfall({
 	    itemCls: 'zh-item',
@@ -58,6 +60,18 @@
 		$('#zh-content').on('click', '.zh-item', function(){
 			var shareUrl = $(this).data('shareurl');
 			window.open(shareUrl);
-		})
+		});
+
+		$(window).scroll(function(){
+			if($(window).scrollTop() > 200){
+				$("#top").fadeIn(400);
+			}else{
+				$("#top").fadeOut(400);
+			}
+		});
+
+		$("#top").click(function(){
+			$("html,body").animate({scrollTop:"0px"}, 200);
+		});
 	});
 </script>
