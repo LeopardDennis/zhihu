@@ -24,6 +24,9 @@
         </script>
 	</head>
 	<body>
+        <header class="zh-header">
+            <img class="zh-logo" src="<?php echo Yii::app()->baseUrl;?>/images/zhihu_logo.png" alt="logo">
+        </header>
 		<?php echo $content; ?>
 	</body>
 </html>

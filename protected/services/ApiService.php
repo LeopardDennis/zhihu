@@ -27,7 +27,7 @@ class ApiService
 	}
 
 	public function batchDownload($articleIds = array())
-	{	
+	{
 		if(!is_array($articleIds))
 			return false;
 
