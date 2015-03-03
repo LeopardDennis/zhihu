@@ -9,7 +9,6 @@
  * Columns in table "articles" available as properties of the model,
  * and there are no model relations.
  *
- * @property integer $id
  * @property integer $news_id
  * @property string $title
  * @property string $image_url
@@ -21,11 +20,14 @@
  * @property string $js_url
  * @property string $css_url
  * @property integer $type
+ * @property integer $retry_times
+ * @property string $signature
+ * @property string $status
  * @property integer $created
  * @property integer $deleted
  *
  */
-abstract class BaseArticles extends CActiveRecord {
+abstract class BaseArticles extends GxActiveRecord {
 
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -46,10 +48,12 @@ abstract class BaseArticles extends CActiveRecord {
 	public function rules() {
 		return array(
 			array('news_id, title, body', 'required'),
-			array('news_id, section_id, type, created, deleted', 'numerical', 'integerOnly'=>true),
+			array('news_id, section_id, type, retry_times, created, deleted', 'numerical', 'integerOnly'=>true),
+			array('signature', 'length', 'max'=>32),
+			array('status', 'length', 'max'=>10),
 			array('image_url, share_url, image_source, section_name, js_url, css_url', 'safe'),
-			array('image_url, share_url, image_source, section_id, section_name, js_url, css_url, type, created, deleted', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, news_id, title, image_url, body, share_url, image_source, section_id, section_name, js_url, css_url, type, created, deleted', 'safe', 'on'=>'search'),
+			array('image_url, share_url, image_source, section_id, section_name, js_url, css_url, type, retry_times, signature, status, created, deleted', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('news_id, title, image_url, body, share_url, image_source, section_id, section_name, js_url, css_url, type, retry_times, signature, status, created, deleted', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,7 +69,6 @@ abstract class BaseArticles extends CActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'id' => Yii::t('app', 'ID'),
 			'news_id' => Yii::t('app', 'News'),
 			'title' => Yii::t('app', 'Title'),
 			'image_url' => Yii::t('app', 'Image Url'),
@@ -77,6 +80,9 @@ abstract class BaseArticles extends CActiveRecord {
 			'js_url' => Yii::t('app', 'Js Url'),
 			'css_url' => Yii::t('app', 'Css Url'),
 			'type' => Yii::t('app', 'Type'),
+			'retry_times' => Yii::t('app', 'Retry Times'),
+			'signature' => Yii::t('app', 'Signature'),
+			'status' => Yii::t('app', 'Status'),
 			'created' => Yii::t('app', 'Created'),
 			'deleted' => Yii::t('app', 'Deleted'),
 		);
@@ -85,7 +91,6 @@ abstract class BaseArticles extends CActiveRecord {
 	public function search() {
 		$criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
 		$criteria->compare('news_id', $this->news_id);
 		$criteria->compare('title', $this->title, true);
 		$criteria->compare('image_url', $this->image_url, true);
@@ -97,6 +102,9 @@ abstract class BaseArticles extends CActiveRecord {
 		$criteria->compare('js_url', $this->js_url, true);
 		$criteria->compare('css_url', $this->css_url, true);
 		$criteria->compare('type', $this->type);
+		$criteria->compare('retry_times', $this->retry_times);
+		$criteria->compare('signature', $this->signature, true);
+		$criteria->compare('status', $this->status, true);
 		$criteria->compare('created', $this->created);
 		$criteria->compare('deleted', $this->deleted);
 

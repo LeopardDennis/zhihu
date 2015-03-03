@@ -25,7 +25,7 @@
 	</head>
 	<body>
         <header class="zh-header">
-            <img class="zh-logo" src="<?php echo Yii::app()->baseUrl;?>/images/zhihu_logo.png" alt="logo">
+        <a href="<?php echo Yii::app()->baseUrl;?>"><img class="zh-logo" src="<?php echo Yii::app()->baseUrl;?>/images/zhihu_logo.png" alt="logo"></a>
         </header>
 		<?php echo $content; ?>
 	</body>

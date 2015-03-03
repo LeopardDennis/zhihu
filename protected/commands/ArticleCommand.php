@@ -34,14 +34,13 @@ class ArticleCommand extends CConsoleCommand
 			$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			curl_close($curl);
 
-			$newsIds = new NewsIds();
-			$newsIds->news_id = $i;
-			$newsIds->http_code = $httpCode;
-			$newsIds->created = strtotime('today');
-			$res = $newsIds->save();
-			$output = $res ? 'Success' : 'Failure';
-
-			echo 'News ID: '.$i.' '.$httpCode.' '.$output."\n";
+			if($httpCode == 200){
+				$articles = new Articles();
+				$articles->news_id = $i;
+				$res = $articles->save(false);
+				$output = $res ? 'Success' : 'Failure';
+				echo 'News ID: '.$i.' '.$httpCode.' '.$output."\n";
+			}
 		}
 	}
 
